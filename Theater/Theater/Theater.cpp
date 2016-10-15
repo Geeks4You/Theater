@@ -57,9 +57,12 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		print(matrix, numberOfRow, numberOfCol);
 
 		// Display Menu selections
-		cout << "\nSales Menu:\n";
+		cout << "\nTicket Sales Menu:\n\n";
 		cout << "1)  Purchase Ticket\n";
-		cout << "2)  Total Sales and Exit\n\n";
+		cout << "2)  Total Ticket Sales\n";
+		cout << "3)  List Sales Report\n";
+		cout << "4)  Exit\n\n";
+		cout << "=========================\n";
 		cout << "Enter Menu Choice: ";
 		cin >> option;
 		cout << endl << endl;
@@ -74,7 +77,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 			cout << "\nEnter seat: ";
 			cin >> col;
 
-			rowselect = row;	
+			rowselect = row;
 
 			if (matrix[row][col] == '*')
 			{
@@ -89,21 +92,26 @@ int _tmain(int argc, _TCHAR* argv[]) {
 				cout << "Sorry, This seat is already taken.\n\n";
 			}
 
-			//total revenue
+		// Option 2: Display Total Sales
+		case '2': {
+
 		}
+		// Option 3: List Sales Report
+		case '3': {
 
-		/*case '2' :
-		{
-		another=false;
 		}
+		// Option 4: Exit Program
+		case '4': {
 
-		default :
-		cout << "Invalid choice";*/
-
+			//exit(0);
+			//break;
+		}
+		}
 		}
 	}
 
-	system("pause");
+	//system("pause");
+	//return 0;
 }
 
 // Function that displays the theater seating chart screen
@@ -126,7 +134,6 @@ void print(char matrix[][9], int numberOfRow, int numberOfCol)
 		cout << endl;
 	}
 
-	// return 0;
 }
 
 //Prices for each row of the theater.
@@ -196,6 +203,7 @@ void ticketPrice(int *rowselect, double *price)
 
 
 	}
+
 }
 
 
