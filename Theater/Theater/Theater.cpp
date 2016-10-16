@@ -2,9 +2,9 @@
 // PRG/410: C++ Programming I
 // October 24, 2016
 // Marcia L. Allen
+// Pharaoh H
 // Keith
 // Michael Aust
-// Pharaoh H
 // As a culminating activity for Week Five, the Learning Team will be writing the following program
 // that can be used by a small theater to sell tickets for performances. The theater's auditorium has
 // 10 rows of seats with 9 seats in each row. The program should display a screen that shows which seats are 
@@ -25,10 +25,16 @@ using namespace std;
 
 // Intialize variables
 const int numberOfRow = 10;
-const int numberOfCol = 10;
+const int numberOfCol = 9;
+
+//ticket price by row
+double price;
 
 // Call function that displays the intialized theater seating chart screen
-void print(char matrix[][10], int numberOfRow, int numberOfCol);
+void print(char matrix[][9], int numberOfRow, int numberOfCol);
+
+//Call function that stores the cost of seats per each row
+void ticketPrice(int *row, double *price);
 
 int _tmain(int argc, _TCHAR* argv[]) {
 
@@ -37,8 +43,10 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	char option;
 	int i, j;
 	int row, col;
+	int rowselect;
 	int ticketsold = 0;
 	bool another = true;
+	int totalticketsale = 0;
 
 	// Initializes all of the seats to available (*)
 	for (i = 0; i < numberOfRow; i++)
@@ -50,9 +58,12 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		print(matrix, numberOfRow, numberOfCol);
 
 		// Display Menu selections
-		cout << "\nSales Menu:\n";
+		cout << "\nTicket Sales Menu:\n\n";
 		cout << "1)  Purchase Ticket\n";
-		cout << "2)  Total Sales and Exit\n\n";
+		cout << "2)  Total Ticket Sales\n";
+		cout << "3)  List Sales Report\n";
+		cout << "4)  Exit\n\n";
+		cout << "=========================\n";
 		cout << "Enter Menu Choice: ";
 		cin >> option;
 		cout << endl << endl;
@@ -66,43 +77,60 @@ int _tmain(int argc, _TCHAR* argv[]) {
 			cin >> row;
 			cout << "\nEnter seat: ";
 			cin >> col;
+			cout << "\n";
+
+			rowselect = row;
 
 			if (matrix[row][col] == '*')
 			{
 				matrix[row][col] = '#';
+
+				ticketPrice(&rowselect, &price);
+				cout << "Sold Ticket Price: $" << price << endl;
 				ticketsold++;
+
+				//Add a sold ticket price to the total sale amount
+				totalticketsale += price;
 			}
 			else
 			{
 				cout << "Sorry, This seat is already taken.\n\n";
 			}
 
-			//total revenue
-		}
-
-		/*case '2' :
+		// Option 2: Display Total Sales
+		case '2': 
 		{
-		another=false;
+			cout << "Total Ticket Sales: $" << totalticketsale << endl;
+			cout << "Total Tickets Sold: " << ticketsold << endl;
+			cout << endl;
 		}
+		// Option 3: List Sales Report
+		case '3': {
 
-		default :
-		cout << "Invalid choice";*/
+		}
+		// Option 4: Exit Program
+		case '4': {
 
+			//exit(0);
+			//break;
+		}
+		}
 		}
 	}
 
-	system("pause");
+	//system("pause");
+	//return 0;
 }
 
 // Function that displays the theater seating chart screen
-void print(char matrix[][10], int numberOfRow, int numberOfCol)
+void print(char matrix[][9], int numberOfRow, int numberOfCol)
 {
 	// Intialize variables
 	int row, col, i, j;
 
 	cout << "* = Seats Available\n";
 	cout << "# = Reserved Seats\n";
-	cout << "Seats:  0  1  2  3  4  5  6  7  8  9" << endl;
+	cout << "Seats:  0  1  2  3  4  5  6  7  8" << endl;
 	
 	// Loop to generate the rows
 	for (i = 0; i < numberOfRow; i++)
@@ -114,139 +142,76 @@ void print(char matrix[][10], int numberOfRow, int numberOfCol)
 		cout << endl;
 	}
 
-	// return 0;
 }
-//...................................................
-void defaultChart()
+
+//Prices for each row of the theater.
+void ticketPrice(int *rowselect, double *price)
 {
-	setDefaultChart(seat);
-	// Hiding Bug
-	checkRowSeat(tempArray, myTable);
-}
-
-//.......................................................
-char setDefaultChart(char s[rows][cols])
-{
-	char pound = '#';
-
-
-
-	for (int i = 1; i <= rows; i++)
+	switch (*rowselect)
 	{
-		for (int j = 1; j <= cols; j++)
-		{
-			s[i][j] = pound;
-
-		}
+	case 0:
+	{
+		*price = 80.00;
+		break;
 	}
-}
-//.......................................................
-void displayChart() {
-	printChart(seat);
-}
 
-//........................................................
-void printChart(char t[rows][cols])
-{
-	char blank = ' ';
-	cout << blank << blank << blank << blank << blank << blank;
-	for (int k = 1; k <= cols; k++)
+	case 1:
 	{
-		cout << k;
+		*price = 75.00;
+		break;
 	}
-	cout << endl;
 
-	for (int i = 1; i <= rows; i++)
+	case 2:
 	{
-		cout << "ROW " << i << " ";
-		for (int j = 1; j <= cols; j++)
-		{
-			cout << t[i][j];
-		}
-		cout << endl;
+		*price = 70.00;
+		break;
 	}
-}
 
-//........................................................
-void getSeatSold() {
-	replacePound(seat);
-}
-
-//.......................................................
-
-
-
-char replacePound(char r[rows][cols])
-{
-	char choice;
-	int i = 1, rw, cl, numtickets = 0;
-	char star = '*';
-	bool flag = true;
-	int total = 0;
-
-	getTicketToBuy(numtickets);
-	while (i <= numtickets)
+	case 3:
 	{
+		*price = 65.00;
+		break;
+	}
 
+	case 4:
+	{
+		*price = 60.00;
+		break;
+	}
 
-		cout << " Enter Row and Column Number " << " ";
+	case 5:
+	{
+		*price = 55.00;
+		break;
+	}
 
-		do {
+	case 6:
+	{
+		*price = 50.00;
+		break;
+	}
 
-			cin >> rw >> cl;
-			if (Check(rw, cl, star))
-			{
-				cout << " Seats are Available " << endl;
-			}
-			else
-			{
-				cout << " Seats are Not Available " << endl;
-				cout << " Please select different seats " << "  ";
+	case 7:
+	{
+		*price = 45.00;
+		break;
+	}
 
-			}
+	case 8:
+	{
+		*price = 40.00;
+		break;
+	}
 
-		} while (Check(rw, cl, star) != flag);
+	case 9:
+	{
+		*price = 35.00;
+		break;
+	}
 
-		// Print total Cost of ticket
-
-		total += price[rw];
-		printTotal(rw);
-		r[rw][cl] = star;
-
-		// catch Bug
-
-		catchBug(rw);
-
-		i++;
 
 	}
 
-	printChart(r);
-
-	cout << " Your Grand Total is " << total << " $  " << endl;
-
-
-
-	totalSeatSale = totalSeatSale + numtickets;
-
-	cout << " Thanks you for purchasing ticket   " << endl;
-
-
-
-}
-//...........................................................
-
-bool Check(int r, int c, char ch)
-{
-
-	if (char(seat[r][c]) != ch)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }
 
 
