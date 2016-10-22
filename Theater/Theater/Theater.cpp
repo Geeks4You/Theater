@@ -276,52 +276,52 @@ void print(char matrix[][9], int numberOfRow, int numberOfCol) {
 void ticketPrice(int *rowselect, double *price) {
 	//change price based on row...the closer the row, the more expensive
 	switch (*rowselect)	{
-		case 0:	{
+		case 1:	{
 			*price = 80.00;
 			break;
 		}
 
-		case 1:	{
+		case 2:	{
 			*price = 75.00;
 			break;
 		}
 
-		case 2:	{
+		case 3:	{
 			*price = 70.00;
 			break;
 		}
 
-		case 3:	{
+		case 4:	{
 			*price = 65.00;
 			break;
 		}
 
-		case 4:	{
+		case 5:	{
 			*price = 60.00;
 			break;
 		}
 
-		case 5:	{
+		case 6:	{
 			*price = 55.00;
 			break;
 		}
 
-		case 6:	{
+		case 7:	{
 			*price = 50.00;
 			break;
 		}
 
-		case 7:	{
+		case 8:	{
 			*price = 45.00;
 			break;
 		}
 
-		case 8:	{
+		case 9:	{
 			*price = 40.00;
 			break;
 		}
 
-		case 9:	{
+		case 10:	{
 			*price = 35.00;
 			break;
 		}
