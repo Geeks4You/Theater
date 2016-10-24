@@ -81,7 +81,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		// Is user input a valid number?
 		int valNum = validateNumber(option);
 		if (valNum != 1) {
-			// User did not enter valid number - prompt for re-entry
+			//user did not enter valid number - prompt for re-entry
 			cout << "You did not enter a valid number for a menu selection.  Please reenter.\n";
 		}
 		else {
@@ -99,127 +99,162 @@ int _tmain(int argc, _TCHAR* argv[]) {
 			else {
 				switch (option) {
 					// Loop changes the available seat (*) chosen to unavailable seat (#) or indicates that the seat is not available
-				case '1': {
-					// Get user input for row and seat number
-					cout << "Enter row: ";
-					cin >> rowUI;
-					cout << "\nEnter seat: ";
-					cin >> colUI;
-					cout << "\n";
+					case '1': {
+						// G et user input for row and seat number
+						cout << "Enter row: ";
+						cin >> rowUI;
+						cout << "\nEnter seat: ";
+						cin >> colUI;
+						cout << "\n";
 
-					// Validate user entry
-					int valRow, valRowRange, valCol, valColRange;
-					valRow = validateNumber(rowUI);
-					valCol = validateNumber(colUI);
+						// Validate user entry
+						int valRow, valRowRange, valCol, valColRange;
+						valRow = validateNumber(rowUI);
+						valCol = validateNumber(colUI);
 
-					// Break out of menu selection (switch-case) if not valid number
-					if (valRow != 1) {
-						//
-						cout << "Please select a valid number for the row.\n";
-						break;
-					}
+						// Break out of menu selection (switch-case) if not valid number
+						if (valRow != 1) {
+							//
+							cout << "Please select a valid number for the row.\n";
+							break;
+						}
 					
-					// Break out of menu selection (switch-case) if not valid number
-					if (valCol != 1) {
-						//
-						cout << "Please select a valid number for the column.\n";
-						break;
-					}
+						// Break out of menu selection (switch-case) if not valid number
+						if (valCol != 1) {
+							//
+							cout << "Please select a valid number for the column.\n";
+							break;
+						}
 
-					// Convert user input of row and column as char to int
-					row = rowUI - '0';
-					col = colUI - '0';
+						// Convert user input of row and column as char to int
+						row = rowUI - '0';
+						col = colUI - '0';
 
-					// Determine if row and column are within range
-					valRowRange = validateWithinRange(row, 1, 10);
-					valColRange = validateWithinRange(col, 1, 9);
+						// Determine if row and column are within range
+						valRowRange = validateWithinRange(row, 1, 10);
+						valColRange = validateWithinRange(col, 1, 9);
 
-					// Break out of menu selection (switch-case) if not within range
-					if (valRowRange != 1){
-						//
-						cout << "Row Selection not within the range of rows.  Please reselect.\n";
-						break;
-					}
+						// Break out of menu selection (switch-case) if not within range
+						if (valRowRange != 1){
+							
+							cout << "Row Selection not within the range of rows.  Please reselect.\n";
+							break;
+						}
 
-					// Break out of menu selection (switch-case) if not within range
-					if (valColRange != 1) {
-						//
-						cout << "Column Selection not within the range of rows.  Please reselect.\n";
-						break;
-					}
+						// Break out of menu selection (switch-case) if not within range
+						if (valColRange != 1) {
+							//
+							cout << "Column Selection not within the range of rows.  Please reselect.\n";
+							break;
+						}
 
-					// After all validation assign rowselect variable value
-					rowselect = row;
+						// After all validation assign rowselect variable value
+						rowselect = row;
 										
-					// Buy ticket IF its available (*)
-					// Note: Display of "row number" and "column number" is reduced by 1, row-- & col-- decrements row & col and stores the new value in the variable, row/col - 1 will subtract 1 to row/col and not store it as a value, this adjustment is because the array begins at 0 and not 1 and the user will see a table beginning at 1, so all rows and columns are 1 more than their place in the array
-					if (matrix[row - 1][col - 1] == '*') {
-						matrix[row - 1][col - 1] = '#';
+						// Buy ticket IF its available (*)
+						// Note: display of "row number" and "column number" is reduced by 1, row-- & col-- decrements row & col and stores the new value in the variable, row/col - 1 will subtract 1 to row/col and not store it as a value, this adjustment is because the array begins at 0 and not 1 and the user will see a table beginning at 1, so all rows and columns are 1 more than their place in the array
+						if (matrix[row - 1][col - 1] == '*') {
+							matrix[row - 1][col - 1] = '#';
 
-						ticketPrice(&rowselect, &price);
-						cout << "Sold Ticket Price: $" << price << endl;
+							ticketPrice(&rowselect, &price);
+							cout << "Sold Ticket Price: $" << price << endl;
 
-						// Increment global variable of tickets sold
-						ticketsold++;
+							// Increment global variable of tickets sold
+							ticketsold++;
 
-						// Add a sold ticket price to the total sale amount (price is variable overwritten for each purchase, totalticketsale is global variable that has each price added to it)
-						totalticketsale += price;
+							// Add a sold ticket price to the total sale amount (price is variable overwritten for each purchase, totalticketsale is global variable that has each price added to it)
+							totalticketsale += price;
+						}
+						// Not available - already sold (#)
+						else
+						{
+							// Tell user that seat is already sold
+							cout << "Sorry, This seat is already taken.\n\n";
+						}
+
+						// End option 1
+						break;
 					}
-					// Not available - already sold (#)
-					else
-					{
-						// Tell user that seat is already sold
-						cout << "Sorry, This seat is already taken.\n\n";
+					// Option 2: Display Total Sales
+					case '2': {
+						cout << "Total Ticket Sales: $" << totalticketsale << endl;
+						cout << "Total Tickets Sold: " << ticketsold << endl;
+						cout << endl;
+
+						// End option 2
+						break;
 					}
+					// Option 3: List Sales Report
+					case '3': {
+						
+						int soldseat;
+						soldseat = ticketsold;
+						int totalavail;
+						totalavail = i * j - ticketsold;
+						
+						// Compare empty and taken seats
+						int taken[9];
+						int avail[9];
 
-					// End option 1
-					break;
-				}
-				// Option 2: Display Total Sales
-				case '2': {
-					cout << "Total Ticket Sales: $" << totalticketsale << endl;
-					cout << "Total Tickets Sold: " << ticketsold << endl;
-					cout << endl;
+						// Initialize variables/spots in the matrix
+						taken[0] = 0; taken[1] = 0; taken[2] = 0; taken[3] = 0; taken[4] = 0; taken[5] = 0; taken[6] = 0; taken[7] = 0; taken[8] = 0; taken[9] = 0;
+						avail[0] = 0; avail[1] = 0; avail[2] = 0; avail[3] = 0; avail[4] = 0; avail[5] = 0; avail[6] = 0; avail[7] = 0; avail[8] = 0; avail[9] = 0;
 
-					// End option 2
-					break;
-				}
-				// Option 3: List Sales Report
-				case '3': {
+						// Row column iterators for the for loop
+						int r, c;
+						for (r = 0; r < 10; r++) {
+							for (c = 0; c < 9; c++) {
+								if (matrix[r][c] == '#') {
+									taken[r]++;
+								} else  {
+									avail[r]++;
+								}
+							}
 
-					system("cls");
-					// Tally total tickets and sales
-					int totalsales;
-					totalsales = ticketsold * totalticketsale;
-					// Display report of sales
-					cout << "List Sales Report\n";
-					cout << "-----------------------\n";
-					cout << "\n\n";
-					cout << "The Total Sales for Today are : $ " << totalsales;
-					cout << "\n\n\n";
+						}
 
-					// End option 3
-					break;
-				}
-				// Option 4: Exit Program
-				case '4': {
+						// Display report of sales
+						cout << "List Sales Report\n";
+						cout << "-----------------------\n";
+						cout << "\n\n";
+						cout << "Seats Sold Total : " << soldseat;
+						cout << "\n\n";
+						cout << "Seats Available by Row \n";
+						cout << "---------------------------\n";
+						cout << "Row #1 : " << taken[0] << " taken - " << avail[0] << " available\n";
+						cout << "Row #2 : " << taken[1] << " taken - " << avail[1] << " available\n";
+						cout << "Row #3 : " << taken[2] << " taken - " << avail[2] << " available\n";
+						cout << "Row #4 : " << taken[3] << " taken - " << avail[3] << " available\n";
+						cout << "Row #5 : " << taken[4] << " taken - " << avail[4] << " available\n";
+						cout << "Row #6 : " << taken[5] << " taken - " << avail[5] << " available\n";
+						cout << "Row #7 : " << taken[6] << " taken - " << avail[6] << " available\n";
+						cout << "Row #8 : " << taken[7] << " taken - " << avail[7] << " available\n";
+						cout << "Row #9 : " << taken[8] << " taken - " << avail[8] << " available\n";
+						cout << "\n\n";
+						cout << "Seats Available Total : " << totalavail;
+						cout << "\n\n\n";
 
-					// Exit the application
-					exit(0);
+						// End option 3
+						break;
+					}
+						// Option 4: Exit Program
+					case '4': {
 
-					// End option 4
-					break;
-				}
+						// Exit the application
+						exit(0);
+
+						// End option 4
+						break;
+					}
 				}
 			}
 		}
 	}
-	//return 0;
 }
 
 // Function to validate if input is within range
 int validateWithinRange(int userInput, int leastVal, int maxVal ) {
-	// Return value - 1 means valid within range, 0 means not within range
+	//return value - 1 means valid within range, 0 means not within range
 	int retVal;
 	retVal = 0;
 
@@ -234,8 +269,7 @@ int validateWithinRange(int userInput, int leastVal, int maxVal ) {
 
 // Function to validate if user input is a number or not
 int validateNumber(char userInput) {
-
-	// Return value - 1 means valid number, 0 means invalid number
+	//return value - 1 means valid number, 0 means invalid number
 	int retVal;
 	retVal = 0;
 
@@ -273,7 +307,7 @@ void print(char matrix[][9], int numberOfRow, int numberOfCol) {
 	}
 }
 
-// Prices for each row of the theater.
+//Prices for each row of the theater.
 void ticketPrice(int *rowselect, double *price) {
 	// Change price based on row...the closer the row, the more expensive
 	switch (*rowselect)	{
